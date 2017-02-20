@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<style>
+.background1 {
+
+      background-color: #eeee12;
+
+      color: red;
+
+    }
+
+    .background {
+
+      background-color: #3ab44a;
+
+      color: white;
+
+    }
+</style>
+<script  src="http://code.angularjs.org/1.2.14/angular.js" ></script>
+<body ng-app="myApp" ng-controller="maincontroller">
+
+<div ng-class="{'background': color.back}">
+
+    <label>
+
+      <span>{{emp.name}}</span>
+
+    </label>
+
+  </div>
+  
+  <div ng-class="{'background': color.back}">
+
+    <label>
+
+      <span>{{emp.name}}</span>
+
+    </label>
+
+  </div>
+  <div ng-class="{'background1': color.back}">
+
+    <label>
+
+      <span>{{emp.name}}</span>
+
+    </label>
+
+  </div>
+</body>
+<script>
+var app= angular.module("myApp",[]);
+app.controller("maincontroller",function($scope){
+$scope.color = {
+	back : true
+};
+
+$scope.emp = {
+		 name: 'Anil Singh',
+
+	        comp: 'code-sample.com',
+
+	        age: '30 Years'
+};
+	
+});
+</script>
+</html>

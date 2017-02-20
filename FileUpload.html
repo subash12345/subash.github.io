@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <title>How to upload file in angularjs</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+   
+</head>
+<body>
+    <div ng-controller="mycontroller">
+        <input type="file" ng-file-select="onSelectFile($files)" multiple>
+    </div>
+     <script>
+        var app = angular.module('myApp', []);
+        app.controller('mycontroller', function ($scope) {
+              $scope.onSelectFile = function ($files) {
+                  for (var i = 0; i < $files.length; i++) {
+                      var $file = $files[i];
+                   
+                      $upload.upload({
+                          url: 'api/HomeControler/upload',
+                          file: $file,
+                          progress: function (e) {
+                              // wait...
+                          }
+                      })
+                        .then(function (data, status, headers, config) {
+                            alert('file is uploaded successfully');
+                        });
+                  }
+              }
+          });
+    </script>
+</body>
+</html>

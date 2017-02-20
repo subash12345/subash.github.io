@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="formApp">
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
+    <script>
+        var formApp = angular.module('formApp', [])
+
+        .controller('myController', function ($scope) {
+            $scope.result = {};
+        });
+    </script>
+</head>
+<body ng-controller="myController">
+    <div class="col-xs-12">
+        <h2>How to handle checkbox and radiobutton in angularjs?</h2>
+        <form>
+            <div>
+                <div>UserName</div>
+                <input type="text" class="form-control" name="username" ng-model="result.username">
+            </div>
+            <div>Latest js frameworks</div>
+            <div>
+                <div class="checkbox-inline">
+                    <input type="checkbox" name="frameworks" ng-model="result.frameworks.nodejs">node.js
+                </div>
+                <div class="checkbox-inline">
+                    <input type="checkbox" name="frameworks" ng-model="result.frameworks.angulaijs">angulaijs
+                </div>
+                <div class="checkbox-inline">
+                    <input type="checkbox" name="frameworks" ng-model="result.frameworks.knockoutjs">knockoutjs
+                </div>
+            </div>
+            <div>You Interested?</div>
+            <div class="checkbox">
+                <div>
+                    <input type="checkbox" name="Interested" ng-model="result.Interested" ng-true-value="Yes!!" ng-false-value="iWish">Are you Interested?
+                </div>
+            </div>
+            <div>Your country?</div>
+            <div>
+                <div class="radio">
+                    <div>
+                        <input type="radio" name="country" value="India" ng-model="result.country">India
+                    </div>
+                </div>
+                <div class="radio">
+                    <div>
+                        <input type="radio" name="country" value="USA" ng-model="result.country">USA
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Get Result</button>
+        </form>
+        <h2>Result - JSON Object</h2>
+        <pre> {{ result }} </pre>
+    </div>
+</body>
+</html>

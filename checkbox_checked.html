@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script>
+    var app = angular.module('addConnectionApp', [])
+    app.controller('addConnectionCtrl', function ($scope) {
+        $scope.companies = [{
+            id: '1',
+            name: 'ViaIndia'
+        }, {
+            id: '2',
+            name: 'Invia'
+        }, {
+            id: '3',
+            name: 'Dominos'
+        }, {
+            id: '4',
+            name: 'Pizza'
+        }];
+
+        $scope.tents = [{
+            id: '1',
+            name: 'Optus'
+        }];
+
+
+        $scope.fName = null;
+        $scope.lName = null;
+        $scope.mobile = null;
+        $scope.email = null;
+        $scope.tenantId = 1;//This is defeult selected item.
+        $scope.companyId = 1;//This is defeult selected item.
+        $scope.accountNo = null;
+        $scope.imsi = null;
+        $scope.imei = null;
+        $scope.message = null;
+
+        $scope.addServices = function () {
+            var self = $scope;
+            var service = {
+                FirstName: self.fName,
+                LastName: self.lName,
+                MobileNo: self.mobile,
+                EmailID: self.email,
+                IMSI: self.imsi,
+                IMEI: self.imei,
+                AccountNo: self.accountNo,
+                Region: self.accountNo,
+                TenantID: self.tenantId,
+                CompanyID: self.companyId
+            };
+            alert(JSON.stringify(service));
+        }
+    });
+    </script>
+</head>
+<body>
+<div class="row" ng-app="addConnectionApp" ng-controller="addConnectionCtrl">
+<div class="large-12 columns">
+<div class="row">
+<div class="large-12 columns">
+<h1 class="heading-primary">New Connection</h1>
+<div class="intro-primary">                 
+<input type="text" ng-model="fName" placeholder="First Name" required />
+<input type="text" ng-model="lName" placeholder="Last Name" required />
+<input type="number" ng-model="mobile" maxlength="12" placeholder="MobileNo" required />
+<select ng-model="tenantId">
+    <option data-ng-repeat="ten in tents" value="{{ten.id}}">{{ten.name}}</option>
+</select>
+<select ng-model="companyId">
+    <option data-ng-repeat="comp in companies" value="{{comp.id}}">{{comp.name}}</option>
+</select>
+<input type="text" ng-model="accountNo" placeholder=" company account no." required />
+<input type="email" ng-model="email" placeholder="Email" required />
+<input type="text" ng-model="imsi" placeholder="IMSI" required />
+<input type="text" ng-model="imei" placeholder="IMEI" required />
+<textarea ng-model="message" placeholder="Message"></textarea>
+<div class="hide-for-small">
+    <a class="button radius small yellow right" ng-click="addServices();">Create New Connection</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+</body>
+</html>

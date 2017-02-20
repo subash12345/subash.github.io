@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>countdown timer in angularjs</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
+    <script>
+
+        function CountDownWatchCtrl($scope, $timeout) {
+
+            var totalcountDown = 180;
+ 
+            var countDowWatch = function () {
+
+                if (totalcountDown < 0) {
+
+                    totalcountDown = 0;
+
+                    return;
+
+                }else {
+
+                    $scope.countDown_tick = totalcountDown;
+
+                    totalcountDown--;
+
+                    $timeout(countDowWatch, 1000);
+
+                }
+
+            };
+
+
+            $scope.countDown_tick = totalcountDown;
+
+            countDowWatch()
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div ng-app ng-controller="CountDownWatchCtrl">
+
+        <div ng-show="countDown_tick > 0">Your password is expired in 180 Seconds.</div>
+
+        <div ng-show="countDown_tick > 0">Seconds left {{countDown_tick}}</div>
+
+        <div ng-show="countDown_tick == 0">Your password is expired!.</div>
+
+    </div>
+
+</body>
+
+</html>

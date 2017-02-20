@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+    <script>
+        var app = angular.module("radioApp", []);
+        app.controller('radioCtrl', function ($scope, $rootScope) {
+            $scope.radii = [{
+                price: '$10',
+                checked: true,
+                name: "Messaging Value Packes"
+            }, {
+                price: '$15',
+                checked: false,
+                name: "International Value Packs"
+            }];
+
+
+            $scope.handleRadioClick = function (radius) {
+                alert(radius.price);
+            };
+        });
+    </script>
+</head>
+<body ng-app="radioApp" ng-controller="radioCtrl">
+    <div ng-repeat="radius in radii" id="radio-{{radius.price}}">
+        <label>
+            <input type="radio" name="radius" ng-checked="radius.checked" ng-change="handleRadioClick(radius)" ng-model="selectedValue.price" value="{{radius.price}}">{{radius.name}}
+        </label>
+    </div>
+</body>
+</html>

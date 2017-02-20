@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html ng-app="app">
+
+
+<head>
+
+  <title>Add Row dynamically</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+
+  <script type="text/javascript">
+
+    var ng = angular.module('app', []);
+
+    ng.controller('controller', function($scope) {
+
+      $scope.rows = [];
+
+
+      $scope.addDynamically = function() {
+
+        $scope.rows.push({
+
+          pick: false,
+
+          question: "fbg",
+
+          fnPlaceholder: "Fist Name",
+
+          lnPlaceholder: "Last Name",
+
+          text: ""
+
+        });
+
+      };
+
+    });
+
+  </script>
+
+
+  <body>
+
+    <h4>How to add dynamically input fields to form using AngularJS?</h4>
+
+    <div ng-controller="controller">
+
+      <button ng-click="addDynamically()">Add New Row Dynamically</button>
+
+      <div>
+
+        <input type="text" placeholder="Fist Name">
+
+        <input type="text" placeholder="Last Name">
+
+        <input type="checkbox" name="check" value="inline">Pick
+
+      </div>
+
+      <div ng-repeat="row in rows">
+
+        <input type="text" placeholder="{{row.fnPlaceholder}}" ng-model="row.question">
+
+        <input ng-class="{'blockInput': !row.pick}" placeholder="{{row.lnPlaceholder}}" type="text" ng-model="row.text">
+
+        <input type="checkbox" name="check" value="inline" ng-model="row.pick">Pick
+
+      </div>
+
+    </div>
+
+  </body>
+
+
+</html>

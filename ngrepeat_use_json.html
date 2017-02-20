@@ -1,0 +1,91 @@
+<!doctype html>
+<html ng-app="myapp">
+<head>
+    <meta charset="utf-8">
+    <title>angularjs ng-repeat using json object</title>
+    <script src="http://code.angularjs.org/1.1.4/angular.js"></script>
+    <script>
+        var app = angular.module('myapp', []);
+
+        app.controller('myController', function ($scope) {
+            var json = {
+                "employees": [{
+                    "title": "SE",
+                    "description": "This is a hard worker",
+                    "weeks": [{
+                        "id": 001,
+                        "title": "1st Week"
+                    }]
+                }, {
+                    "title": "SR. SE",
+                    "description": "This is smart worker",
+                    "weeks": [{
+                        "id": 002,
+                        "title": "2nd Week"
+                    }, {
+                        "id": 003,
+                        "title": "3rd Week"
+                    }]
+                }, {
+                    "title": "Tech Lead",
+                    "description": "This is both hard and smart worker",
+                    "weeks": [{
+                        "id": 004,
+                        "title": "4th Week"
+                    }, {
+                        "id": 005,
+                        "title": "5th Week"
+                    }]
+                }]
+            };
+
+            $scope.myscope = json;
+        });
+    </script>
+</head>
+<body ng-controller="myController">
+    <div ng-repeat="emp in myscope.employees">
+        <h3>{{ emp.title }}</h3>
+        <p>{{ emp.description }}</p>
+        <div ng-repeat="week in emp.weeks">
+            {{ week.title }}
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.angularjs.org/1.4.12/angular.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('mainController', function($scope) {
+      $scope.comp = {
+        code: 'CS',
+        name: 'code-sample.com'
+      };
+    });
+  </script>
+</head>
+
+<body ng-app="myApp">
+  <div ng-controller="mainController">
+    <h2>ng-if else in angularjs</h2>
+    <hr/>
+    <div>
+      <div ng-if="comp.code === 'CS'">
+        If code is = <span style="color:green;">{{comp.code}}</span> , than company is = <a href="http://www.{{comp.name}}">{{comp.name}}</a>
+      </div>
+      <div ng-if="comp.code === '' ">
+        code-sample.xyz
+      </div>
+    </div>
+    <br/>
+    <hr/>
+    <a href="http://www.code-sample.com/2011/11/angularjs-tutorial-step-by-step.html" traget="_blank">For more...</a>
+  </div>
+</body>
+
+</html>

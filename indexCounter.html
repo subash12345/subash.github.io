@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.0/angular.min.js"></script>
+<body ng-app="CounterApp" ng-controller="CounterController">
+ <input type="button" value="Add new rows!!" ng-click="AddRows()" />
+    <div ng-repeat="row in CounterRows">
+        <div>{{$index +1}} :  {{row.name}} , {{row.web}} <input type="button" value="Delete" ng-click="DeleteRow($index)" /></div>
+    </div>
+</body>
+<script>
+var app = angular.module("CounterApp",[]);
+app.controller("CounterController",["$scope",function($scope){
+	$scope.CounterRows = [
+	                      { name: 'Row1', web: 'www.code-sample.com' },
+	                      { name: 'Row2', web: 'www.code-sample.net' },
+	                      { name: 'Row3', web: 'www.code-sample.in' },
+	                      { name: 'Row4', web: 'www.code-sample.co.in' },
+	                      { name: 'Row5', web: 'www.code-sample.org' }];   
+	
+	$scope.AddRows = function(){
+		$scope.CounterRows.push({ name: 'Row6', web: 'www.code-sample.com' });
+	};
+	
+	$scope.DeleteRow = function(index){
+		     $scope.CounterRows.splice(index, 1);
+	}
+	                     
+}]);
+</script>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+<body>
+<div ng-app="mobileApp" ng-controller="MobileCtrl">
+
+   <div id="gridView">
+
+       <div class="ngGridStyle" ng-grid="mobileGridView"></div>
+
+   </div>
+
+</div>
+<script>var app = angular.module('mobileApp', ['ngGrid']);
+
+
+app.controller('MobileCtrl', function ($scope, mobileService) { 
+
+
+$scope.mobiles = null;  
+
+
+$scope.mobileColumns = [
+
+            { field: 'Account', displayName: 'Account'},
+
+            { field: 'AlertToMobile', displayName: 'AlertToMobile'},
+
+            { field: 'AlertToEmail', displayName: 'AlertToEmail'},
+
+            {
+
+                field: 'remove', displayName: 'Action',
+
+                cellTemplate: editRowTemplate
+
+            }];
+
+
+    $scope.filterOptions = {
+
+        filterText: ''
+
+    };
+
+
+    $scope.setPagingData = function (data, page, pageSize) {
+
+        if (page == null) {
+
+            page = 1;
+
+        }
+
+        var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+
+         
+
+        $scope.mobiles = pagedData;
+
+         
+
+        $scope.pagingOptions.totalServerItems = data.length;
+
+         
+
+         
+
+        if (!$scope.$$phase) {
+
+            $scope.$apply();
+
+        }
+
+    };
+
+
+     
+
+
+   $scope.getPagedDataAsync = function (pageSize, page) {
+
+        setTimeout(function () {
+
+            mobileService.getMobiles().then(function (resp) {
+
+                if (resp.data !== undefined) {
+
+                    $scope.setPagingData(resp.data, page, pageSize);
+
+                }
+
+            });
+
+        }, 100);
+
+    };
+
+
+     
+
+
+
+   $scope.$watch('pagingOptions', function () {
+
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+
+    }, true);
+
+
+
+    $scope.pagingOptions = {
+
+        pageSizes: [10, 20, 50, 100],
+
+        pageSize: 10,
+
+        totalServerItems: 0,
+
+        currentPage: 1
+
+    };
+
+
+    $scope.mobileGridView = {
+
+        data: 'mobiles',
+
+        rowHeight: 60,
+
+        columnDefs: 'mobileColumns',
+
+        plugins: [new pluginNgGridCVSExport()],
+
+        enablePaging: true,
+
+        showFooter: true,
+
+        sortable: true,
+
+        enableCellSelection: true,
+
+        enableRowSelection: true,
+
+        filterOptions: $scope.filterOptions,
+
+        pagingOptions: $scope.pagingOptions
+
+    };
+
+});
+</script>
+</body>
+</html>

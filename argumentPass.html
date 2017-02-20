@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <title>how to pass an argument to angularjs custom filter</title>
+
+  <script src="https://code.angularjs.org/1.3.14/angular.js"></script>
+
+  <script>
+
+    var cfApp = angular.module('customFilterApp', []);
+
+
+    cfApp.controller('customFilterCtrl', function($scope) {
+
+      $scope.name = 'Anil Singh';
+
+       
+
+      $scope.items = [{
+
+        id: 1,
+
+        name: 'Dilip'
+
+      }, {
+
+        id: 2,
+
+        name: 'Upendra'
+
+      }, {
+
+        id: 3,
+
+        name: 'Raju'
+
+      }]
+
+    });
+
+
+    cfApp.filter('filterSetup', function() {
+
+      return function(obj, val) {
+
+        var total = 0;
+
+
+        var pArray = obj.map(function(obj) {
+
+          return obj[val]
+
+        });
+
+
+        function sumOf(fst, sec) {
+
+          return fst + sec
+
+        }
+
+
+        return total = pArray.reduce(sumOf, 0);
+
+      };
+
+    });
+
+  </script>
+
+</head>
+
+
+<body ng-app="customFilterApp" ng-controller="customFilterCtrl">
+
+  <p>My name is {{name}}</p>
+
+  Sum of Ids is (<span ng-bind="items | filterSetup:'id'"></span>) <br>
+
+  Sum of Name is (<span ng-bind="items | filterSetup:'name'"></span>)
+
+</body>
+
+
+</html>

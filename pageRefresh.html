@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+<style>
+.borderCss{
+
+     border-style: solid;
+
+    border-color: #ff0000 #0000ff;
+
+     padding:0.3em;
+
+    margin: 0.3em;
+
+}
+
+
+.btn{
+
+     border-style: solid;
+
+    border-color: green;
+
+}
+</style>
+<body>
+<div ng-app="dAddApp">
+
+  <section ng-controller="dAddCtrl">
+
+    <display-Button-For-Add-Div></display-Button-For-Add-Div>
+
+    <div id="displayDivs"></div>
+
+  </section>
+
+</div>
+<script>
+
+var app = angular.module('dAddApp', []);
+
+
+     //This is controller, where initialize the count default values.
+
+    app.controller('dAddCtrl', function($scope) {
+
+      $scope.count = 0;
+
+    });
+
+
+     //This directive that returns an element which adds DIV on displayButtonForAddDiv click.
+
+    app.directive("displayButtonForAddDiv", function() {
+
+      return {
+
+        restrict: "E",
+
+        template: "<div class='btn'><button adding>Click to add dynamically div</button> </div>"
+
+      }
+
+    });
+
+
+     //This directive for adding DIV on adding button click .
+
+    app.directive("adding", function($compile) {
+
+      return function(scope, element, attrs) {
+
+        element.bind("click", function() {
+
+          scope.count++;
+
+          angular.element(document.getElementById('displayDivs'))
+          .append($compile("<div class='borderCss' data-alert=" + scope.count + ">Show Div --> " + scope.count + "</div>")(scope));
+
+        });
+
+      };
+
+    });
+     </script>
+</body>
+</html>
+

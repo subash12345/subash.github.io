@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+
+  <meta charset=utf-8 />
+
+  <title>filtering country while using selection box in angularjs</title>
+
+  <script>
+
+    var app = angular.module("myApp", []);
+
+    app.controller('filteringController', function($scope) {
+
+      $scope.countries = [{
+
+        name: "India",
+
+        Id: "1"
+
+      }, {
+
+        name: "Nepal",
+
+        Id: '2'
+
+      }];
+
+    });
+
+  </script>
+
+</head>
+
+
+<body ng-app="myApp">
+
+  <div ng-controller="filteringController">
+
+    <select ng-model="inputText">
+
+      <option ng-repeat="cont in countries">{{cont.name}}</option>
+
+    </select>
+
+    <ul>
+
+      <li ng-repeat="cont in countries | filter:inputText">Ids of {{cont.name}} is {{cont.Id}}</li>
+
+    </ul>
+
+  </div>
+
+</body>
+
+
+</html>

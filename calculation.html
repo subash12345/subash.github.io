@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+
+<body ng-controller="calculationAPP as ctrl">
+<h1>Calculate app</h1>
+<div>
+TEXT:<input type="text" ng-model="ctrl.input1">
+<span ng-bind="ctrl.selectedoption"></span>
+<input type="text" ng-model="ctrl.input2">
+<button ng-click="ctrl.TotalValue()">=</button>
+<span ng-bind="ctrl.resultvalue"></span>
+<p>
+choose operation:
+<button ng-click="ctrl.Clickedbutton('+')">+</button>
+<button ng-click="ctrl.Clickedbutton('-')">-</button>
+<button ng-click="ctrl.Clickedbutton('*')">*</button>
+<button ng-click="ctrl.Clickedbutton('/')">/</button>
+</p>
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller("calculationAPP", Calculation);
+
+function Calculation(){
+	this.Clickedbutton = function(button){
+		this.selectedoption = button;
+	}
+	
+	this.TotalValue = function(){
+		var number1 = parseFloat(this.input1);
+		var number2 = parseFloat(this.input2);
+		
+		if(this.selectedoption == '+'){
+			this.resultvalue = number1 + number2;
+		}else if(this.selectedoption == '-'){
+			this.resultvalue = number1 - number2;
+		}else if(this.selectedoption == '*'){
+			this.resultvalue = number1 * number2;
+		}else if(this.selectedoption == '/'){
+			this.resultvalue = number1 / number2;
+		}
+	}
+}
+</script>
+</body>
+
+</html>
