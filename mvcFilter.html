@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>angularjs filter example Plunker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script data-require="angular.js@1.5.x" src="https://code.angularjs.org/1.5.8/angular.js" data-semver="1.5.8"></script>
+  <script>
+    angular.element(document).ready(function() {
+      var app = angular.module('myApp', []);
+
+      app.controller('myCtrl', ['$scope', 'store', function($scope, store) {
+        $scope.search = '';
+        $scope.products = [];
+        $scope.products = store.getProducts();
+        $scope.filterProductsByCategory = function(category) {
+          $scope.search = category;
+        };
+      }]);
+
+      // fake service, substitute with your server call ($http)
+      app.factory('store', function() {
+        var products = [{
+          name: 'Apples',
+          category: 'Fruit',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Pears',
+          category: 'Fruit',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Grapes',
+          category: 'Fruit',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Potato',
+          category: 'Vegetables',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Green Beans',
+          category: 'Vegetables',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Broccoli',
+          category: 'Vegetables',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Milk',
+          category: 'Dairy',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Yogurt',
+          category: 'Dairy',
+          AddedBy: 'Anil Singh'
+        }, {
+          name: 'Cheese',
+          category: 'Dairy',
+          AddedBy: 'Anil Singh'
+        }];
+
+        return {
+          getProducts: function() {
+            return products;
+          }
+        };
+
+      });
+
+      angular.bootstrap(document, ['myApp']);
+    });
+  </script>
+</head>
+
+<body>
+  <div ng-controller="myCtrl">
+    <h2>Search Product: </h2>
+    <input type="text" ng-model="search" placeholder="Search..." />
+    <table cellpadding="5" cellspacing="1" border="1" style="width:100%;">
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>AddedBy</th>
+      </tr>
+      <tr ng-repeat="product in products | filter:search | orderBy:'name'">
+        <td>{{product.name}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.AddedBy}}</td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
