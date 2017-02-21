@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 600px;
+}
+
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+.infoWindowContent {
+  font-size: 14px !important;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCy9Tci1VGkkKkwLNk_PSnLdSjF9fkM7Hg"></script>
+ <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<body>
+<h1>Google Map<h1>
+<div ng-app="mapsApp" ng-controller="MapCtrl">
+  <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+  <div id="map"></div>
+</div>
+<script>
+angular.module('mapsApp', [])
+  .controller('MapCtrl', function($scope) {
+
+    var mapOptions = {
+      zoom: 8,
+      center: new google.maps.LatLng(9.9252, 78.1198),
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    }
+
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    $scope.markers = [];
+    var infoWindow = new google.maps.InfoWindow();
+
+    //init autocomplete
+    var input = document.getElementById('pac-input');
+    $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    //autocomplete.bindTo('bounds', $scope.map);
+    autocomplete.addListener('place_changed', function() {
+      setPlace();
+    });
+
+
+    var setPlace = function() {
+      //infoWindow.close();
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        $scope.map.fitBounds(place.geometry.viewport);
+      } else {
+        $scope.map.setCenter(place.geometry.location);
+      }
+
+      createMarker({
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+        address: place.formatted_address
+      });
+    }
+
+
+    var createMarker = function(info) {
+      var marker = new google.maps.Marker({
+        map: $scope.map,
+        position: new google.maps.LatLng(info.lat, info.lng),
+        title: info.address
+      });
+      marker.content = '<div class="infoWindowContent">' + info.address + '</div>';
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+        infoWindow.open($scope.map, marker);
+      });
+      $scope.markers.push(marker);
+    }
+
+
+    $scope.openInfoWindow = function(e, selectedMarker) {
+      e.preventDefault();
+      google.maps.event.trigger(selectedMarker, 'click');
+    }
+
+  });
+
+</script>
+</body>
+</html>
